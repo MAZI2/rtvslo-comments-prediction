@@ -1,0 +1,21 @@
+time dilemma!!!!
+
+
+
+
+lstms as article sequence is not necessarily independent.
+
+3. Create special time-conditional tokens (for text)
+
+If you're using a language model (e.g. BERT embeddings), you can also:
+
+    Add “It’s Monday morning” or “Published at 10:30am” as a pseudo-sentence prepended to the article
+
+    Helps the model contextualize relevance
+
+
+    -----
+
+TODO: batch size
+TODO: embedding token size / other embeddings
+TODO: koren stevila komentarjev ali pa kaj drugega

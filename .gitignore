@@ -1,5 +1,7 @@
 __pycache__/
 .ipynb_checkpoints/
+workspace/*
+!workspace/workspace.ipynb
 
 # Editor files
 .idea
@@ -18,3 +20,4 @@ rtvslo_test.json.gz
 rtvslo_train.json.gz
 rtvslo_test.json
 rtvslo_train.json
+rtvslo_validation.json
