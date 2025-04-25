@@ -19,3 +19,18 @@ If you're using a language model (e.g. BERT embeddings), you can also:
 TODO: batch size
 TODO: embedding token size / other embeddings
 TODO: koren stevila komentarjev ali pa kaj drugega
+
+How to ensemble this with the log-linear model for even better performance?
+
+Ensemble 5 trained models (diff random seeds) and average predictions — it will reduce MAE
+
+
+----
+1. Target Transformation (you're already doing this)
+
+Why it works:
+
+You observed overdispersion + skew.
+Applying log1p(y) compresses large values and improves gradient flow.
+This exploits the heavy-tailed distribution of your data.
+✅ Already helping you — you are exploiting distribution here.
