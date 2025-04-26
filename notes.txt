@@ -1,7 +1,7 @@
 time dilemma!!!!
 
 
-
+lstm
 
 lstms as article sequence is not necessarily independent.
 
@@ -36,3 +36,13 @@ This exploits the heavy-tailed distribution of your data.
 ✅ Already helping you — you are exploiting distribution here.
 
 Priors
+
+baseline
+
+a sem jaz log1p napovedoval
+
+visualization
+
+weighting
+
+how were the splits performed

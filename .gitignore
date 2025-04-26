@@ -6,7 +6,11 @@ workspace/*
 !workspace/loglinear.ipynb
 !workspace/improved.ipynb
 !workspace/BERTBottleneck.ipynb
-
+!workspace/LSTM.ipynb
+!workspace/rige_and_bossting.ipynb
+!workspace/sqrt.ipynb
+!workspace/new_time_encoding.ipynb
+!workspace/google_colab.ipynb
 
 # Editor files
 .idea
