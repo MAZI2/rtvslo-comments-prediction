@@ -4,6 +4,9 @@ workspace/*
 !workspace/workspace.ipynb
 !workspace/negbinom.ipynb
 !workspace/loglinear.ipynb
+!workspace/improved.ipynb
+!workspace/BERTBottleneck.ipynb
+
 
 # Editor files
 .idea

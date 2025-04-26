@@ -34,3 +34,5 @@ You observed overdispersion + skew.
 Applying log1p(y) compresses large values and improves gradient flow.
 This exploits the heavy-tailed distribution of your data.
 ✅ Already helping you — you are exploiting distribution here.
+
+Priors
