@@ -11,6 +11,8 @@ workspace/*
 !workspace/sqrt.ipynb
 !workspace/new_time_encoding.ipynb
 !workspace/google_colab.ipynb
+!workspace/google_colab2.ipynb
+!workspace/clustering.ipynb
 
 # Editor files
 .idea
