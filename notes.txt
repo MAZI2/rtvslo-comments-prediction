@@ -1,49 +1,9 @@
-time dilemma!!!!
 
-
-lstm
-
-contextual relationships ... attention ... last 6 hours ...
-
-lstms as article sequence is not necessarily independent.
-
-3. Create special time-conditional tokens (for text)
-
-
-
-
------
-
-TODO: batch size
-TODO: embedding token size / other embeddings
-TODO: koren stevila komentarjev ali pa kaj drugega
-
-How to ensemble this with the log-linear model for even better performance?
-
-Ensemble 5 trained models (diff random seeds) and average predictions — it will reduce MAE
-
-
-----
-1. Target Transformation (you're already doing this)
-
-Why it works:
-
-You observed overdispersion + skew.
-Applying log1p(y) compresses large values and improves gradient flow.
-This exploits the heavy-tailed distribution of your data.
-✅ Already helping you — you are exploiting distribution here.
-
-Priors
-
-baseline
-
-a sem jaz log1p napovedoval
-
-visualization
-
-weighting
-
-how were the splits performed
+CLUSTERING
+You're using UMAP → KMeans to create semantically-coherent clusters. However:
+    Effect: Some clusters may:
+        Group articles semantically, but not behaviorally (e.g., no relation in comment patterns).
+        Be too small or too broad, harming predictive power.
 
 ✅ Saved best model for cluster 0 (Val MAE: 24.56)
 ✅ Saved best model for cluster 1 (Val MAE: 31.52)
@@ -62,10 +22,32 @@ how were the splits performed
 ✅ Saved best model for cluster 14 (Val MAE: 15.76)
 
 
-You're using UMAP → KMeans to create semantically-coherent clusters. However:
 
-    Effect: Some clusters may:
 
-        Group articles semantically, but not behaviorally (e.g., no relation in comment patterns).
 
-        Be too small or too broad, harming predictive power.
+HYPERPARAMETERS:
+batch size
+embedding token size / other embeddings
+koren stevila komentarjev ali pa kaj drugega
+
+VZORCI V PODATKIH
+- podatki dovolj noisy da katerkoly steer NNja s predobdelavami škoduje
+- značilnosti se skrivajo v zlo specifičnih encodingih. Preclustering škoduje. Za podatke niso značilne semantične skupine ... so pa značilne tematsko razdeljene
+- priors škodujejo
+- You observed overdispersion + skew.
+    - Applying log1p(y) compresses large values and improves gradient flow.
+        This exploits the heavy-tailed distribution of your data.
+
+
+TODO:
+    try topic multimodel
+    try outlier avoidance?
+
+- how were the splits performed
+
+ZINB
+learned time embeddings not working
+time is very non descriptive here. The unnatural scaling helps
+
+on best predictions the adj helps quite a lot. On 26.15 model it doesnt. Compare the distribution
+quantile smoothing
