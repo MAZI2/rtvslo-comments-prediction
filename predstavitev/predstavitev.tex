@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{tikz}
+\usepackage{graphicx}
 \usetikzlibrary{mindmap,positioning}
 
 \begin{document}
@@ -213,8 +214,65 @@
 \end{tikzpicture}
 
 \section{Vrednotenje}
-\section{Razlaga}
+\begin{itemize}
+    \item Med treniranjem je model vrednoten na validacijski podmnožici učne množice (95\% training / 5\% validation) in uporablja early stopping glede na MAE na validacijski množici. Končni model je evalviran na testni množici na tekmovalnem strežniku.
+    \item Lokalno so bili modeli evalvirani tudi na testni podmnožici iz učne množice, ki ni bila vključena v trening.
+    \item Maksimiziramo MAE, vendar so bili modeli primerjani tudi po distribuciji napovedi ..., ki pa se po navadi neposredno pozna na MAE.
+\end{itemize}
+Za končni model je bil izbran ensemble treh enakih MLP modelov, ki delujejo nad bert vložitvami s topici, subtopici ter časovnimi vložitvami. 
+\subsection{Izbira hiperparametrov}
+Hiperparametri modela:
+\begin{itemize}
+    \item loss function - L1 loss / HuberLoss
+    \item batch size - 150
+    \item learning rate - 1e-4
+    \item weight decay - 1e-3
+    \item dropout - 0.1
+    \item hidden layer dimension - 1024
+\end{itemize}
+Hiperparametri so bili izbrani s pomočjo grid searcha. Napovedi z izbranim modelom se kljub istemu seedu, s ponovnimi zagoni razlikujejo, zato je potrebno hiperparametre evalvirati na poveprečju večih zagonov.
+\section{Razlaga modela}
 
+\includegraphics[scale=0.7]{imgs/model.png}
 
+\section{Dodatne slike in diagrami}
+\subsection{Porazdelitev napake}
+\includegraphics[scale=0.7]{imgs/buckets.png}
+
+\subsection{Napovedi vs resnične vrednosti za podmnožico}
+\includegraphics[scale=0.5]{imgs/real_vs_pred.png}
+
+\newpage
+\subsection{Gruče}
+
+\begin{center}
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_0.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_1.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_2.png}
+
+  \vspace{1em}
+
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_3.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_4.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_5.png}
+
+  \vspace{1em}
+
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_6.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_7.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_8.png}
+
+  \vspace{1em}
+
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_9.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_10.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_11.png}
+
+  \vspace{1em}
+
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_12.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_13.png}\hfill
+  \includegraphics[width=0.3\textwidth]{imgs/cluster_plots/cluster_14.png}
+\end{center}
 \end{document}
 
