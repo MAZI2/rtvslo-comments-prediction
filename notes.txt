@@ -50,4 +50,10 @@ learned time embeddings not working
 time is very non descriptive here. The unnatural scaling helps
 
 on best predictions the adj helps quite a lot. On 26.15 model it doesnt. Compare the distribution
-quantile smoothing
+quantile smoothing Values < 1st percentile are shrunk (multiplied by 0.7).
+Values > 99th percentile are clipped.
+
+Best Params: {'batch_size': 150, 'lr': 5e-05, 'weight_decay': 0.0001, 'dropout': 0.1, 'hidden_dim': 512}
+very unstable
+
+“In the training data, predictions like this corresponded to real values around X. Let's use that instead.” Neural networks can get the ranking/order of data right but misestimate the scale (e.g., predicting 100 instead of 500).
