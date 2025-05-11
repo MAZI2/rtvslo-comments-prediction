@@ -2,6 +2,8 @@ __pycache__/
 .ipynb_checkpoints/
 workspace/*
 !workspace/workspace.ipynb
+!workspace/submission.ipynb
+
 !workspace/negbinom.ipynb
 !workspace/loglinear.ipynb
 !workspace/improved.ipynb
