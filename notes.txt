@@ -28,16 +28,6 @@ You're using UMAP → KMeans to create semantically-coherent clusters. However:
 HYPERPARAMETERS:
 batch size
 embedding token size / other embeddings
-koren stevila komentarjev ali pa kaj drugega
-
-VZORCI V PODATKIH
-- podatki dovolj noisy da katerkoly steer NNja s predobdelavami škoduje
-- značilnosti se skrivajo v zlo specifičnih encodingih. Preclustering škoduje. Za podatke niso značilne semantične skupine ... so pa značilne tematsko razdeljene
-- priors škodujejo
-- You observed overdispersion + skew.
-    - Applying log1p(y) compresses large values and improves gradient flow.
-        This exploits the heavy-tailed distribution of your data.
-
 
 - how were the splits performed
 
