@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1746994280 "predstavitev.tex" "predstavitev.pdf" "predstavitev" 1746994282 0
+["pdflatex"] 1746995764 "predstavitev.tex" "predstavitev.pdf" "predstavitev" 1746995766 0
   "/home/matjaz/latex/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/home/matjaz/latex/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/home/matjaz/latex/texmf-dist/fonts/tfm/jknappen/ec/tcrm0700.tfm" 1136768653 1536 73da8e8f1d2a4c957d51ca133585586b ""
@@ -115,6 +115,8 @@
   "/home/matjaz/latex/texmf-var/web2c/pdftex/pdflatex.fmt" 1702502373 8217941 47211959369e07101e9d96e51b3330d9 ""
   "/home/matjaz/latex/texmf.cnf" 1702502318 496 01ab80fa0036a81d2df86fb0ac70c709 ""
   "imgs/buckets.png" 1746993287 22676 450aa168af1c1a18b6844c12d02e74a5 ""
+  "imgs/cluster2.png" 1746993449 37534 2cf643b8fea0290c63b1a1d5ca879f0f ""
+  "imgs/cluster3.png" 1746993465 49735 0005558da224783047c07c6d8f75f8c9 ""
   "imgs/cluster_plots/cluster_0.png" 1745917638 92526 7dfd5c701066c579330343998d59c550 ""
   "imgs/cluster_plots/cluster_1.png" 1745917638 101405 7e7ffb1f2f7bb0759fbe67105394b083 ""
   "imgs/cluster_plots/cluster_10.png" 1745917641 86110 5f44d413d0d694095493d6b741c496e9 ""
@@ -132,8 +134,8 @@
   "imgs/cluster_plots/cluster_9.png" 1745917640 42046 99de7d129b63733d230f262c05496980 ""
   "imgs/model.png" 1746993124 71925 8b71b2943a16b50778ed3ff3b7932f1e ""
   "imgs/real_vs_pred.png" 1746994201 73035 dd0c19d2a5ced5c2cbb0d20f612172af ""
-  "predstavitev.aux" 1746994282 1146 84fb496294b5d88d1d412bf1d2499b9a "pdflatex"
-  "predstavitev.tex" 1746994279 12339 4cbeed71c43e01b66fd343a8e94f59f3 ""
+  "predstavitev.aux" 1746995766 1300 ac778bfb7ca9d93e49cc4160bc941ce5 "pdflatex"
+  "predstavitev.tex" 1746995758 12568 c7e1a98dc51d3bb24d95fd4b07578a18 ""
   (generated)
   "predstavitev.aux"
   "predstavitev.log"
