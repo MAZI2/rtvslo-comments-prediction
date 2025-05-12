@@ -230,12 +230,24 @@ Hiperparametri modela:
     \item dropout - 0.1
     \item hidden layer dimension - 1024
 \end{itemize}
-Hiperparametri so bili izbrani s pomočjo grid searcha. Napovedi z izbranim modelom se kljub istemu seedu, s ponovnimi zagoni razlikujejo, zato je potrebno hiperparametre evalvirati na poveprečju večih zagonov.
+Hiperparametri so bili izbrani s pomočjo grid searcha. Napovedi z izbranim modelom se kljub istemu seedu, s ponovnimi zagoni razlikujejo, zato je potrebno hiperparametre evalvirati na poveprečju večih zagonov. Uporabljeno je bilo 3kratno prečno preverjanje.
 \section{Razlaga modela}
 
 \includegraphics[scale=0.7]{imgs/model.png}
+\subsection{SHAP}
+\begin{center}
+\includegraphics[scale=0.7]{imgs/shap_values.png}
+\newpage
+\includegraphics[scale=0.7]{imgs/shap_importance.png} \\
+\includegraphics[scale=0.7]{imgs/shap_table.png} \\
+\includegraphics[scale=0.5]{imgs/topic_shap.png} \\
+\includegraphics[scale=0.5]{imgs/subtopic_shap.png} \\
+\end{center}
 
 \section{Dodatne slike in diagrami}
+\subsection{Porazdelitev učnih podatkov}
+\includegraphics[scale=0.7]{imgs/distribution.png}
+
 \subsection{Porazdelitev napake}
 \includegraphics[scale=0.7]{imgs/buckets.png}
 

@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1746995764 "predstavitev.tex" "predstavitev.pdf" "predstavitev" 1746995766 0
+["pdflatex"] 1747069461 "predstavitev.tex" "predstavitev.pdf" "predstavitev" 1747069464 0
   "/home/matjaz/latex/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/home/matjaz/latex/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/home/matjaz/latex/texmf-dist/fonts/tfm/jknappen/ec/tcrm0700.tfm" 1136768653 1536 73da8e8f1d2a4c957d51ca133585586b ""
@@ -132,10 +132,16 @@
   "imgs/cluster_plots/cluster_7.png" 1745917640 96404 5abc810e8dda1abcfb9f17f111b49b3e ""
   "imgs/cluster_plots/cluster_8.png" 1745917640 50737 15923dbe7c65f65080dd1e9805954b17 ""
   "imgs/cluster_plots/cluster_9.png" 1745917640 42046 99de7d129b63733d230f262c05496980 ""
+  "imgs/distribution.png" 1747061928 34367 cb546cc738946c6c40bb76cebb583c9d ""
   "imgs/model.png" 1746993124 71925 8b71b2943a16b50778ed3ff3b7932f1e ""
   "imgs/real_vs_pred.png" 1746994201 73035 dd0c19d2a5ced5c2cbb0d20f612172af ""
-  "predstavitev.aux" 1746995766 1300 ac778bfb7ca9d93e49cc4160bc941ce5 "pdflatex"
-  "predstavitev.tex" 1746995758 12568 c7e1a98dc51d3bb24d95fd4b07578a18 ""
+  "imgs/shap_importance.png" 1747068526 46179 4066eab69770a0bc67d85a3671ec90e8 ""
+  "imgs/shap_table.png" 1747068564 55882 76065fd6de65d37c53bcf1bb628ea133 ""
+  "imgs/shap_values.png" 1747068456 82775 98fe3a7b1f4b7d64b7d868d7f9d407c6 ""
+  "imgs/subtopic_shap.png" 1747068546 52265 f4fc6ac4bd4a95c8b9aa238518283b1f ""
+  "imgs/topic_shap.png" 1747068538 27763 a28d1a95359357f1995e3c4f53cdd495 ""
+  "predstavitev.aux" 1747069464 1522 2cdd4442527bfac38450f05b29095e0b "pdflatex"
+  "predstavitev.tex" 1747069451 13032 c52cf5c11aa678334ea6f2ffe9029100 ""
   (generated)
   "predstavitev.aux"
   "predstavitev.log"
