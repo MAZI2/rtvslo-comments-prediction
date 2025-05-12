@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import pandas as pd
 import os
+from transformers import AutoTokenizer, AutoModel
+from tqdm import tqdm
 
 # === Data Loading and Processing ===
 
@@ -170,7 +172,7 @@ class RTVPredictor:
             else:
                 no_improve += 1
                 if no_improve >= patience:
-                    print(f"⏹️ Early stopping at epoch {epoch+1}")
+                    print(f"Early stopping at epoch {epoch+1}")
                     break
 
         self.model = model
@@ -198,11 +200,12 @@ class RTVPredictor:
             preds = self.model(x, t, st, d).squeeze().cpu().numpy()
         return np.clip(np.expm1(preds), 0, None)
 
-def ensemble_predict(n=10):
+def ensemble_predict(n=10, data_path="data/rtvslo_test.json", emb_path="embeddings/sloberta_embeddings_test.pt"):
     # === Load data ===
-    train_data = load_json("data/rtvslo_train.json")
-    val_data = load_json("data/rtvslo_test.json")
-    bert_val = torch.load("embeddings/sloberta_embeddings_test.pt").numpy()
+    val_data = load_json(data_path)
+    bert_val = torch.load(emb_path).numpy()
+
+    train_data = load_json("data/rtvslo_train.json")  # still used for fitting encoders
 
     # === Fit encoders on training data ===
     topics, subtopics = extract_topics_from_urls([a['url'] for a in train_data])
@@ -218,14 +221,13 @@ def ensemble_predict(n=10):
         a["hour"] = dt.hour
 
     # === Collect model paths ===
-    model_paths = sorted(os.listdir("best_models"))[:n]
-    model_paths = [os.path.join("best_models", p) for p in model_paths if p.endswith(".pt")]
+    model_paths = sorted(os.listdir("models"))[:n]
+    model_paths = [os.path.join("models", p) for p in model_paths if p.endswith(".pt")]
 
     assert len(model_paths) == n, f"Expected {n} models, found {len(model_paths)}"
 
     # === Predict using each model and collect results ===
     all_preds = []
-
     for i, path in enumerate(model_paths):
         print(f"Loading model {i+1}/{n}: {os.path.basename(path)}")
         model = RTVPredictor()
@@ -235,33 +237,97 @@ def ensemble_predict(n=10):
         preds = model.predict(val_data, bert_val)
         all_preds.append(preds)
 
-    # === Average predictions ===
     preds = np.mean(all_preds, axis=0)
 
-    # --- 2. Postprocessing: Quantile Smoothing ---
-
-    # Step 1: Clip extreme values
+    # --- Postprocessing: Quantile smoothing ---
     max_allowed = 3000
     preds = np.clip(preds, 0, max_allowed)
-
-    # Step 2: Quantile smoothing
     q_low = np.percentile(preds, 1)
     q_high = np.percentile(preds, 99)
 
-    # Linearly squash very small and very large predictions
     def quantile_smooth(x):
         if x < q_low:
-            return x * 0.7  # shrink low values
+            return x * 0.7
         elif x > q_high:
-            return q_high # shrink heavy tails
+            return q_high
         else:
             return x
 
-    vectorized_smooth = np.vectorize(quantile_smooth)
-    smoothed_preds = vectorized_smooth(preds)
-
-    # --- 3. Save ---
+    smoothed_preds = np.vectorize(quantile_smooth)(preds)
     np.savetxt("predictions.txt", smoothed_preds, fmt="%.4f")
+    print("Saved predictions to predictions.txt")
+
+def embed_dataset(json_path, save_path):
+    print(f"Embedding dataset: {json_path}")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    tokenizer = AutoTokenizer.from_pretrained("EMBEDDIA/sloberta")
+    model = AutoModel.from_pretrained("EMBEDDIA/sloberta").to(device)
+    model.eval()
+
+    df = pd.read_json(json_path)
+    df['full_text'] = df['title'] + " " + df['lead'] + " " + df['paragraphs'].apply(lambda x: " ".join(x))
+
+    def mean_pooling(outputs, attention_mask):
+        token_embeddings = outputs.last_hidden_state
+        input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+        return torch.sum(token_embeddings * input_mask_expanded, dim=1) / \
+               torch.clamp(input_mask_expanded.sum(dim=1), min=1e-9)
+
+    def embed_article(text):
+        inputs = tokenizer(
+            text, return_tensors='pt', truncation=True,
+            padding='max_length', max_length=512,
+            return_token_type_ids=False
+        )
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+        with torch.no_grad():
+            outputs = model(**inputs)
+            pooled = mean_pooling(outputs, inputs['attention_mask'])
+        return pooled.squeeze(0)
+
+    embeddings = []
+    for text in tqdm(df['full_text']):
+        emb = embed_article(text)
+        embeddings.append(emb.cpu())
+
+    embeddings_tensor = torch.stack(embeddings)
+    torch.save(embeddings_tensor, save_path)
+    print(f"Saved to {save_path}")
+
+def train_and_save_model():
+    os.makedirs("models", exist_ok=True)
+
+    # === Load training data ===
+    train_data = load_json("data/rtvslo_train.json")
+    bert_train = torch.load("embeddings/sloberta_embeddings_train.pt").numpy()
+
+    # === Add time features
+    for a in train_data:
+        dt = pd.to_datetime(a["date"])
+        a["year"] = dt.year
+        a["month"] = dt.month
+        a["day_of_week"] = dt.weekday()
+        a["hour"] = dt.hour
+
+    # === Train model
+    model = RTVPredictor()
+    model.train(train_data, bert_train, save_path="models/model_01.pt")
+    print("Model saved to models/model_01.pt")
+
 
 if __name__ == "__main__":
-    ensemble_predict(n=3)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--train", action="store_true", help="Train a new model and save it")
+    parser.add_argument("--embed", action="store_true", help="Embed a new dataset")
+    parser.add_argument("--data_path", type=str, default="data/rtvslo_test.json", help="Path to dataset for prediction or embedding")
+    parser.add_argument("--emb_path", type=str, default="embeddings/sloberta_embeddings_test.pt", help="Where to save/load embeddings")
+    args = parser.parse_args()
+
+    if args.embed:
+        embed_dataset(args.data_path, args.emb_path)
+    elif args.train:
+        train_and_save_model()
+    else:
+        ensemble_predict(n=3, data_path=args.data_path, emb_path=args.emb_path)
+

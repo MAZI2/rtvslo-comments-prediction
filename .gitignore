@@ -17,6 +17,9 @@ workspace/*
 !workspace/google_colab_latest.ipynb
 !workspace/clustering.ipynb
 
+embeddings/sloberta_embeddings_train.pt
+models_backup
+
 # Editor files
 .idea
 .idea/*
