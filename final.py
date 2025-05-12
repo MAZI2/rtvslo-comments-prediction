@@ -180,7 +180,7 @@ class RTVPredictor:
 
     def load(self, path, bert_dim):
         self.model = MLPWithEmbeddings(bert_dim, len(self.topic_enc.classes_), len(self.subtopic_enc.classes_)).to(self.device)
-        self.model.load_state_dict(torch.load(path))
+        self.model.load_state_dict(torch.load(path, map_location=self.device))
 
     def predict(self, articles, bert_vectors):
         self.prepare(articles)
