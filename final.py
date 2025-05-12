@@ -204,7 +204,6 @@ def ensemble_predict(n=10, data_path="data/rtvslo_test.json", emb_path="embeddin
     # === Load data ===
     val_data = load_json(data_path)
     bert_val = torch.load(emb_path).numpy()
-
     train_data = load_json("data/rtvslo_train.json")  # still used for fitting encoders
 
     # === Fit encoders on training data ===
@@ -228,6 +227,7 @@ def ensemble_predict(n=10, data_path="data/rtvslo_test.json", emb_path="embeddin
 
     # === Predict using each model and collect results ===
     all_preds = []
+
     for i, path in enumerate(model_paths):
         print(f"Loading model {i+1}/{n}: {os.path.basename(path)}")
         model = RTVPredictor()
@@ -330,4 +330,3 @@ if __name__ == "__main__":
         train_and_save_model()
     else:
         ensemble_predict(n=3, data_path=args.data_path, emb_path=args.emb_path)
-
